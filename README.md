@@ -1,5 +1,7 @@
 # Username Generator
 
+<https://joetul.github.io/username-generator/>
+
 A small, fast, zero-dependency username generator. Runs entirely in the browser,
 hosted for free on GitHub Pages. Clean minimal UI, light and dark themes, and
 a handful of presets built from well-known open-source word lists.
@@ -56,6 +58,7 @@ redistributed under their respective upstream licenses — full text in
 `LICENSES/`.
 
 | List                          | Source                                                                          | License     |
+| ----------------------------- | ------------------------------------------------------------------------------- | ----------- |
 | `adjectives-common.txt`       | [taikuukaits/SimpleWordlists](https://github.com/taikuukaits/SimpleWordlists)   | MIT         |
 | `nouns-common.txt`            | [taikuukaits/SimpleWordlists](https://github.com/taikuukaits/SimpleWordlists)   | MIT         |
 | `animals-common.json`         | [dariusk/corpora](https://github.com/dariusk/corpora)                           | CC0 1.0     |

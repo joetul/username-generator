@@ -187,6 +187,19 @@ function showToast(toast, message) {
   }, 1500);
 }
 
+let copyFlashTimer;
+function flashCopied(btn) {
+  const original = btn.dataset.originalLabel ?? btn.textContent;
+  btn.dataset.originalLabel = original;
+  btn.classList.add("is-copied");
+  btn.textContent = "Copied!";
+  clearTimeout(copyFlashTimer);
+  copyFlashTimer = setTimeout(() => {
+    btn.classList.remove("is-copied");
+    btn.textContent = original;
+  }, 1000);
+}
+
 async function main() {
   const form = document.getElementById("options");
   const presetSelect = document.getElementById("preset");
@@ -233,7 +246,7 @@ async function main() {
     if (!text) return;
     try {
       await navigator.clipboard.writeText(text);
-      showToast(toastEl, "Copied!");
+      flashCopied(copyBtn);
     } catch (err) {
       console.error(err);
       showToast(toastEl, "Copy failed");

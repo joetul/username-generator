@@ -1,0 +1,389 @@
+:root {
+  color-scheme: light dark;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  --transition: 150ms ease;
+
+  --bg: light-dark(#fafaf7, #0e1116);
+  --surface: light-dark(#ffffff, #171b22);
+  --surface-muted: light-dark(#f4f4f0, #1f242d);
+  --text: light-dark(#161616, #ececec);
+  --text-muted: light-dark(#5f6168, #9ca0a8);
+  --border: light-dark(#e4e4df, #2a3038);
+  --accent: light-dark(#2563eb, #6aa3ff);
+  --accent-contrast: light-dark(#ffffff, #0e1116);
+  --accent-soft: light-dark(rgb(37 99 235 / 0.1), rgb(106 163 255 / 0.14));
+  --danger: light-dark(#b91c1c, #f87171);
+  --focus-ring: light-dark(rgb(37 99 235 / 0.45), rgb(106 163 255 / 0.55));
+  --shadow-sm: light-dark(
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.35)
+  );
+  --shadow-md: light-dark(
+    0 4px 16px rgb(0 0 0 / 0.06),
+    0 4px 16px rgb(0 0 0 / 0.45)
+  );
+  --caret: light-dark(
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235f6168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%239ca0a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>")
+  );
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: var(--space-4);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  z-index: 10;
+}
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+.icon-btn:hover {
+  background: var(--surface-muted);
+}
+.icon-btn .icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon--sun,
+.icon--moon {
+  display: none;
+}
+/* Default (no explicit theme): match system. Moon = "click to go dark". */
+:root:not([data-theme]) .icon--moon {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .icon--moon {
+    display: none;
+  }
+  :root:not([data-theme]) .icon--sun {
+    display: block;
+  }
+}
+:root[data-theme="light"] .icon--moon {
+  display: block;
+}
+:root[data-theme="dark"] .icon--sun {
+  display: block;
+}
+
+/* Layout */
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Result panel */
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.result {
+  font-family: var(--font-mono);
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
+  cursor: pointer;
+  user-select: all;
+  max-width: 100%;
+  word-break: break-all;
+  text-align: center;
+  /* Reserve two lines so wrapping doesn't push the options below. */
+  min-height: calc(1.2em * 2 + var(--space-3) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--transition),
+    transform var(--transition);
+}
+.result:hover {
+  background: var(--accent-soft);
+}
+.result:active {
+  transform: scale(0.99);
+}
+.result[data-state="error"] {
+  color: var(--danger);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 500;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+.btn--primary:not(:disabled):hover {
+  filter: brightness(1.05);
+}
+
+.btn--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn--secondary:not(:disabled):hover {
+  background: var(--surface-muted);
+}
+
+.toast {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Options card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  margin: 0 0 var(--space-4);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.field-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-height: 1.1em;
+}
+
+.field select,
+.field input[type="number"] {
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  width: 100%;
+  min-height: 2.75rem;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: var(--caret);
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 12px 8px;
+  padding-right: 2.25rem;
+}
+.field select:hover,
+.field input[type="number"]:hover {
+  border-color: var(--accent);
+}
+.field select:focus,
+.field input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+@media (max-width: 480px) {
+  .container,
+  .site-header {
+    padding-inline: var(--space-4);
+  }
+  .result-panel {
+    padding: var(--space-5) var(--space-3);
+  }
+  .card {
+    padding: var(--space-4);
+  }
+}

@@ -73,6 +73,8 @@ body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
+  /* Disables iOS Safari double-tap-to-zoom. Pinch-zoom still works. */
+  touch-action: manipulation;
   transition:
     background-color var(--transition),
     color var(--transition);

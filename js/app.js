@@ -1,5 +1,8 @@
 import { generate, PRESETS, DEFAULT_OPTIONS } from "./generator.js";
 
+// Paths are verbatim upstream files; loadLists below hard-codes each source's
+// JSON shape (`animals.animals`, `colors.colors[].color`, tab-separated EFF
+// diceware, etc.). Don't edit the data files — re-run the upstream sources.
 const DATA_FILES = {
   adjectives: "data/adjectives-common.txt",
   nouns: "data/nouns-common.txt",
@@ -140,6 +143,12 @@ function saveOptions(opts) {
   }
 }
 
+let saveOptionsTimer;
+function scheduleSaveOptions(opts) {
+  clearTimeout(saveOptionsTimer);
+  saveOptionsTimer = setTimeout(() => saveOptions(opts), 250);
+}
+
 function resolvedTheme() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
@@ -187,6 +196,45 @@ function showToast(toast, message) {
   }, 1500);
 }
 
+function setupSteppers(root) {
+  const steppers = root.querySelectorAll(".stepper");
+  const syncDisabled = (stepper) => {
+    const input = stepper.querySelector('input[type="number"]');
+    if (!input) return;
+    const value = Number.parseInt(input.value, 10);
+    const min = input.min !== "" ? Number(input.min) : -Infinity;
+    const max = input.max !== "" ? Number(input.max) : Infinity;
+    for (const btn of stepper.querySelectorAll(".stepper-btn")) {
+      const delta = btn.dataset.action === "increment" ? 1 : -1;
+      const atLimit = Number.isNaN(value)
+        ? false
+        : delta > 0
+          ? value >= max
+          : value <= min;
+      btn.disabled = atLimit;
+    }
+  };
+
+  for (const stepper of steppers) {
+    const input = stepper.querySelector('input[type="number"]');
+    if (!input) continue;
+    stepper.addEventListener("click", (e) => {
+      const btn = e.target.closest(".stepper-btn");
+      if (!btn || btn.disabled) return;
+      const delta = btn.dataset.action === "increment" ? 1 : -1;
+      const current = Number.parseInt(input.value, 10) || 0;
+      const min = input.min !== "" ? Number(input.min) : -Infinity;
+      const max = input.max !== "" ? Number(input.max) : Infinity;
+      const next = Math.max(min, Math.min(max, current + delta));
+      if (next === current) return;
+      input.value = String(next);
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    input.addEventListener("input", () => syncDisabled(stepper));
+    syncDisabled(stepper);
+  }
+}
+
 let copyFlashTimer;
 function flashCopied(btn) {
   const original = btn.dataset.originalLabel ?? btn.textContent;
@@ -217,6 +265,7 @@ async function main() {
   if (saved) applyOptionsToForm(form, saved);
   // Re-fire so the hint reflects a saved non-default preset.
   presetSelect.dispatchEvent(new Event("change"));
+  setupSteppers(form);
 
   let lists;
   try {
@@ -230,7 +279,7 @@ async function main() {
 
   const doGenerate = () => {
     const opts = readOptions(form);
-    saveOptions(opts);
+    scheduleSaveOptions(opts);
     try {
       resultEl.textContent = generate(lists, opts);
       delete resultEl.dataset.state;

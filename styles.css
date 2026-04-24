@@ -40,8 +40,8 @@
     0 4px 16px rgb(0 0 0 / 0.45)
   );
   --caret: light-dark(
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235f6168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%239ca0a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>")
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%235f6168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%239ca0a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E")
   );
 }
 
@@ -295,8 +295,8 @@ body {
   border-color: var(--success);
 }
 
-/* Reserve width for the longer "Copied!" label so the flash doesn't reflow. */
-#copy-btn {
+/* Reserve width so a text swap (e.g. Copy → Copied!) doesn't reflow. */
+.btn--fixed-width {
   min-width: 7rem;
 }
 
@@ -388,6 +388,74 @@ body {
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
+.stepper {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+.stepper:hover {
+  border-color: var(--accent);
+}
+.stepper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.stepper input[type="number"] {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  text-align: center;
+  padding: var(--space-3) var(--space-2);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.stepper input[type="number"]:hover,
+.stepper input[type="number"]:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+.stepper input[type="number"]::-webkit-inner-spin-button,
+.stepper input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.stepper-btn {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+.stepper-btn:hover:not(:disabled) {
+  background: var(--surface);
+  color: var(--text);
+}
+.stepper-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.stepper-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
 @media (max-width: 480px) {
   .container,
   .site-header {
@@ -398,5 +466,15 @@ body {
   }
   .card {
     padding: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

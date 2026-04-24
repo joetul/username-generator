@@ -89,6 +89,9 @@ function pickWords(lists, preset, wordCount) {
   const { sources } = PRESETS[preset];
   const words = [];
   for (let i = 0; i < wordCount; i++) {
+    // When wordCount exceeds sources.length, stick to the last source for the
+    // remainder (e.g. classic with count=3 → adj, noun, noun). Reads naturally
+    // and keeps every preset well-defined at any word count.
     const source = sources[Math.min(i, sources.length - 1)];
     const pool = lists[source];
     if (!pool?.length) {
@@ -119,6 +122,9 @@ export function generate(lists, options = {}) {
     const candidate = buildOnce(lists, opts);
     if (!maxLength || candidate.length <= maxLength) return candidate;
   }
-  // Couldn't satisfy maxLength — return best-effort so the UI always has something.
-  return buildOnce(lists, opts);
+  const fallback = buildOnce(lists, opts);
+  console.warn(
+    `generate: couldn't satisfy maxLength=${maxLength} after 50 attempts (returned ${fallback.length} chars). Preset/word-count likely makes it unreachable.`,
+  );
+  return fallback;
 }

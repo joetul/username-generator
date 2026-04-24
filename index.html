@@ -76,14 +76,14 @@
           </button>
           <button
             id="copy-btn"
-            class="btn btn--secondary"
+            class="btn btn--secondary btn--fixed-width"
             type="button"
             disabled
           >
             Copy
           </button>
         </div>
-        <p id="toast" class="toast" role="status" hidden>Copied!</p>
+        <p id="toast" class="toast" role="status" hidden></p>
       </section>
 
       <form id="options" class="options card" aria-labelledby="options-heading">
@@ -95,18 +95,36 @@
             <span class="field-hint" id="preset-hint"></span>
           </label>
 
-          <label class="field">
-            <span class="field-label">Word count</span>
-            <input
-              id="wordCount"
-              name="wordCount"
-              type="number"
-              min="1"
-              max="8"
-              value="2"
-              inputmode="numeric"
-            />
-          </label>
+          <div class="field">
+            <label class="field-label" for="wordCount">Word count</label>
+            <div class="stepper">
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="decrement"
+                aria-label="Decrease word count"
+              >
+                &minus;
+              </button>
+              <input
+                id="wordCount"
+                name="wordCount"
+                type="number"
+                min="1"
+                max="8"
+                value="2"
+                inputmode="numeric"
+              />
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="increment"
+                aria-label="Increase word count"
+              >
+                +
+              </button>
+            </div>
+          </div>
 
           <label class="field">
             <span class="field-label">Separator</span>
@@ -128,31 +146,67 @@
             </select>
           </label>
 
-          <label class="field">
-            <span class="field-label">Trailing digits</span>
-            <input
-              id="digits"
-              name="digits"
-              type="number"
-              min="0"
-              max="6"
-              value="0"
-              inputmode="numeric"
-            />
-          </label>
+          <div class="field">
+            <label class="field-label" for="digits">Trailing digits</label>
+            <div class="stepper">
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="decrement"
+                aria-label="Decrease trailing digits"
+              >
+                &minus;
+              </button>
+              <input
+                id="digits"
+                name="digits"
+                type="number"
+                min="0"
+                max="6"
+                value="0"
+                inputmode="numeric"
+              />
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="increment"
+                aria-label="Increase trailing digits"
+              >
+                +
+              </button>
+            </div>
+          </div>
 
-          <label class="field">
-            <span class="field-label">Max length (0 = unlimited)</span>
-            <input
-              id="maxLength"
-              name="maxLength"
-              type="number"
-              min="0"
-              max="64"
-              value="0"
-              inputmode="numeric"
-            />
-          </label>
+          <div class="field">
+            <label class="field-label" for="maxLength">Max length (0 = unlimited)</label>
+            <div class="stepper">
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="decrement"
+                aria-label="Decrease max length"
+              >
+                &minus;
+              </button>
+              <input
+                id="maxLength"
+                name="maxLength"
+                type="number"
+                min="0"
+                max="64"
+                value="0"
+                inputmode="numeric"
+              />
+              <button
+                type="button"
+                class="stepper-btn"
+                data-action="increment"
+                aria-label="Increase max length"
+              >
+                +
+              </button>
+            </div>
+          </div>
         </div>
       </form>
     </main>

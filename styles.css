@@ -152,8 +152,10 @@ body {
     background-color var(--transition),
     border-color var(--transition);
 }
-.icon-btn:hover {
-  background: var(--surface-muted);
+@media (hover: hover) {
+  .icon-btn:hover {
+    background: var(--surface-muted);
+  }
 }
 .icon-btn .icon {
   width: 18px;
@@ -234,8 +236,10 @@ body {
     background-color var(--transition),
     transform var(--transition);
 }
-.result:hover {
-  background: var(--accent-soft);
+@media (hover: hover) {
+  .result:hover {
+    background: var(--accent-soft);
+  }
 }
 .result:active {
   transform: scale(0.99);
@@ -276,8 +280,10 @@ body {
   color: var(--accent-contrast);
   border-color: var(--accent);
 }
-.btn--primary:not(:disabled):hover {
-  filter: brightness(1.05);
+@media (hover: hover) {
+  .btn--primary:not(:disabled):hover {
+    filter: brightness(1.05);
+  }
 }
 
 .btn--secondary {
@@ -285,14 +291,22 @@ body {
   color: var(--text);
   border-color: var(--border);
 }
-.btn--secondary:not(:disabled):hover {
-  background: var(--surface-muted);
+@media (hover: hover) {
+  .btn--secondary:not(:disabled):hover {
+    background: var(--surface-muted);
+  }
 }
-.btn--secondary.is-copied,
-.btn--secondary.is-copied:not(:disabled):hover {
+.btn--secondary.is-copied {
   background: var(--success);
   color: var(--success-contrast);
   border-color: var(--success);
+}
+@media (hover: hover) {
+  .btn--secondary.is-copied:not(:disabled):hover {
+    background: var(--success);
+    color: var(--success-contrast);
+    border-color: var(--success);
+  }
 }
 
 /* Reserve width so a text swap (e.g. Copy → Copied!) doesn't reflow. */
@@ -377,9 +391,11 @@ body {
   background-size: 12px 8px;
   padding-right: 2.25rem;
 }
-.field select:hover,
-.field input[type="number"]:hover {
-  border-color: var(--accent);
+@media (hover: hover) {
+  .field select:hover,
+  .field input[type="number"]:hover {
+    border-color: var(--accent);
+  }
 }
 .field select:focus,
 .field input[type="number"]:focus {
@@ -399,8 +415,10 @@ body {
     border-color var(--transition),
     box-shadow var(--transition);
 }
-.stepper:hover {
-  border-color: var(--accent);
+@media (hover: hover) {
+  .stepper:hover {
+    border-color: var(--accent);
+  }
 }
 .stepper:focus-within {
   border-color: var(--accent);
@@ -418,10 +436,15 @@ body {
   -moz-appearance: textfield;
   appearance: textfield;
 }
-.stepper input[type="number"]:hover,
 .stepper input[type="number"]:focus {
   border-color: transparent;
   box-shadow: none;
+}
+@media (hover: hover) {
+  .stepper input[type="number"]:hover {
+    border-color: transparent;
+    box-shadow: none;
+  }
 }
 .stepper input[type="number"]::-webkit-inner-spin-button,
 .stepper input[type="number"]::-webkit-outer-spin-button {
@@ -443,9 +466,11 @@ body {
     background-color var(--transition),
     color var(--transition);
 }
-.stepper-btn:hover:not(:disabled) {
-  background: var(--surface);
-  color: var(--text);
+@media (hover: hover) {
+  .stepper-btn:hover:not(:disabled) {
+    background: var(--surface);
+    color: var(--text);
+  }
 }
 .stepper-btn:disabled {
   opacity: 0.35;
